@@ -12,5 +12,6 @@ package main;
 public class NewPrint {
     public static void main(String[] args) {
         System.out.println("Olá Joãozonho aqui!");
+        System.out.println("Eai Joãozinho, Juan aqui");
     }
 }
