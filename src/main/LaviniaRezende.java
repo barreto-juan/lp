@@ -14,6 +14,7 @@ public class LaviniaRezende {
         
         System.out.println("Olá, Lavínia aqui");
         System.out.println("Olá, Julia aqui");
+        System.out.println("Juan aqui!");
     }
     
 }
