@@ -8,6 +8,8 @@ package view;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -25,10 +28,6 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "vendedor", catalog = "banco_vendas", schema = "")
-@NamedQueries({
-    @NamedQuery(name = "Vendedor.findAll", query = "SELECT v FROM Vendedor v")
-    , @NamedQuery(name = "Vendedor.findByIdvendedor", query = "SELECT v FROM Vendedor v WHERE v.idvendedor = :idvendedor")
-    , @NamedQuery(name = "Vendedor.findByNome", query = "SELECT v FROM Vendedor v WHERE v.nome = :nome")})
 public class Vendedor implements Serializable {
 
     @Transient
@@ -44,6 +43,11 @@ public class Vendedor implements Serializable {
     @Column(name = "nome")
     private String nome;
 
+    
+    
+    @OneToMany(mappedBy = "vendedor")
+    List<Vendas> vendas = new ArrayList<>();
+    
     public Vendedor() {
     }
 
@@ -76,6 +80,15 @@ public class Vendedor implements Serializable {
         changeSupport.firePropertyChange("nome", oldNome, nome);
     }
 
+    public List<Vendas> getVendas() {
+        return vendas;
+    }
+
+    public void setVendas(List<Vendas> vendas) {
+        this.vendas = vendas;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

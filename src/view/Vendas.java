@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -28,16 +29,6 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "vendas", catalog = "banco_vendas", schema = "")
-@NamedQueries({
-    @NamedQuery(name = "Vendas.findAll", query = "SELECT v FROM Vendas v")
-    , @NamedQuery(name = "Vendas.findByIdvenda", query = "SELECT v FROM Vendas v WHERE v.idvenda = :idvenda")
-    , @NamedQuery(name = "Vendas.findByVendedorIdvendedor", query = "SELECT v FROM Vendas v WHERE v.vendedorIdvendedor = :vendedorIdvendedor")
-    , @NamedQuery(name = "Vendas.findByClienteIdcliente", query = "SELECT v FROM Vendas v WHERE v.clienteIdcliente = :clienteIdcliente")
-    , @NamedQuery(name = "Vendas.findByProduto", query = "SELECT v FROM Vendas v WHERE v.produto = :produto")
-    , @NamedQuery(name = "Vendas.findByDescricao", query = "SELECT v FROM Vendas v WHERE v.descricao = :descricao")
-    , @NamedQuery(name = "Vendas.findByPreco", query = "SELECT v FROM Vendas v WHERE v.preco = :preco")
-    , @NamedQuery(name = "Vendas.findByQuantidade", query = "SELECT v FROM Vendas v WHERE v.quantidade = :quantidade")
-    , @NamedQuery(name = "Vendas.findByDtVenda", query = "SELECT v FROM Vendas v WHERE v.dtVenda = :dtVenda")})
 public class Vendas implements Serializable {
 
     @Transient
@@ -49,10 +40,6 @@ public class Vendas implements Serializable {
     @Basic(optional = false)
     @Column(name = "idvenda")
     private Integer idvenda;
-    @Column(name = "vendedor_idvendedor")
-    private Integer vendedorIdvendedor;
-    @Column(name = "cliente_idcliente")
-    private Integer clienteIdcliente;
     @Column(name = "produto")
     private String produto;
     @Column(name = "descricao")
@@ -65,6 +52,11 @@ public class Vendas implements Serializable {
     @Column(name = "dtVenda")
     @Temporal(TemporalType.DATE)
     private Date dtVenda;
+    
+    @ManyToOne
+    private Cliente cliente;
+    @ManyToOne
+    private Vendedor vendedor;
 
     public Vendas() {
     }
@@ -83,25 +75,23 @@ public class Vendas implements Serializable {
         changeSupport.firePropertyChange("idvenda", oldIdvenda, idvenda);
     }
 
-    public Integer getVendedorIdvendedor() {
-        return vendedorIdvendedor;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setVendedorIdvendedor(Integer vendedorIdvendedor) {
-        Integer oldVendedorIdvendedor = this.vendedorIdvendedor;
-        this.vendedorIdvendedor = vendedorIdvendedor;
-        changeSupport.firePropertyChange("vendedorIdvendedor", oldVendedorIdvendedor, vendedorIdvendedor);
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public Integer getClienteIdcliente() {
-        return clienteIdcliente;
+    public Vendedor getVendedor() {
+        return vendedor;
     }
 
-    public void setClienteIdcliente(Integer clienteIdcliente) {
-        Integer oldClienteIdcliente = this.clienteIdcliente;
-        this.clienteIdcliente = clienteIdcliente;
-        changeSupport.firePropertyChange("clienteIdcliente", oldClienteIdcliente, clienteIdcliente);
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
     }
+
+    
 
     public String getProduto() {
         return produto;

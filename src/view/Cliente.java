@@ -8,7 +8,9 @@ package view;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,13 +31,6 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "cliente", catalog = "banco_vendas", schema = "")
-@NamedQueries({
-    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")
-    , @NamedQuery(name = "Cliente.findByIdcliente", query = "SELECT c FROM Cliente c WHERE c.idcliente = :idcliente")
-    , @NamedQuery(name = "Cliente.findByNome", query = "SELECT c FROM Cliente c WHERE c.nome = :nome")
-    , @NamedQuery(name = "Cliente.findByCpf", query = "SELECT c FROM Cliente c WHERE c.cpf = :cpf")
-    , @NamedQuery(name = "Cliente.findByDtNasc", query = "SELECT c FROM Cliente c WHERE c.dtNasc = :dtNasc")
-    , @NamedQuery(name = "Cliente.findByEndereco", query = "SELECT c FROM Cliente c WHERE c.endereco = :endereco")})
 public class Cliente implements Serializable {
 
     @Transient
@@ -60,6 +56,9 @@ public class Cliente implements Serializable {
     @Column(name = "endereco")
     private String endereco;
 
+    @OneToMany(mappedBy = "cliente")
+    List<Vendas> vendas = new ArrayList<>();
+    
     public Cliente() {
     }
 
@@ -94,6 +93,16 @@ public class Cliente implements Serializable {
         this.nome = nome;
         changeSupport.firePropertyChange("nome", oldNome, nome);
     }
+
+    public List<Vendas> getVendas() {
+        return vendas;
+    }
+
+    public void setVendas(List<Vendas> vendas) {
+        this.vendas = vendas;
+    }
+    
+    
 
     public String getCpf() {
         return cpf;
