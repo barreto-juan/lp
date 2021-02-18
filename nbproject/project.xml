@@ -3,10 +3,9 @@
     <type>org.netbeans.modules.java.j2seproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
-            <name>ProjetoFInal</name>
+            <name>LP4B_Grupo9</name>
             <source-roots>
-                <root id="src.dir"/>
-                <root id="src.relatorios.dir"/>
+                <root id="src.dir" name="src"/>
             </source-roots>
             <test-roots/>
         </data>
